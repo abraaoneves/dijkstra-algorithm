@@ -4,13 +4,15 @@ import "sync"
 
 type PriorityQueue []*Vertex
 
-type NodeQueue struct {
+type Queue struct {
 	Items []Vertex
 	Lock  sync.RWMutex
 }
 
+const FIRST int = 0
+
 // Enqueue adds an Node to the end of the queue
-func (queue *NodeQueue) Enqueue(vertex Vertex) {
+func (queue *Queue) Enqueue(vertex Vertex) {
 	queue.Lock.Lock()
 
 	// add first value to the queue
@@ -43,4 +45,33 @@ func (queue *NodeQueue) Enqueue(vertex Vertex) {
 	}
 
 	queue.Lock.Unlock()
+}
+
+// Remove an item from starts of the queue
+func (queue *Queue) Dequeue() *Vertex {
+	queue.Lock.Lock()
+	item := queue.Items[FIRST]
+	queue.Items = queue.Items[1:len(queue.Items)]
+	queue.Lock.Unlock()
+	return &item
+}
+
+// Creates new Queue
+func (queue *Queue) NewQueue() *Queue {
+	queue.Lock.Lock()
+	queue.Items = []Vertex{}
+	queue.Lock.Unlock()
+	return queue
+}
+
+func (queue *Queue) isEmpty() bool {
+	queue.Lock.RLock()
+	defer queue.Lock.RUnlock()
+	return len(queue.Items) == 0
+}
+
+func (queue *Queue) Size() int {
+	queue.Lock.RLock()
+	defer queue.Lock.RUnlock()
+	return len(queue.Items)
 }
