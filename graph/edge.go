@@ -1,6 +1,6 @@
 package graph
 
 type Edge struct {
-	Node  *Node
-	Wight int
+	Node   *Node
+	Weight int
 }

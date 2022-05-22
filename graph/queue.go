@@ -64,7 +64,7 @@ func (queue *Queue) NewQueue() *Queue {
 	return queue
 }
 
-func (queue *Queue) isEmpty() bool {
+func (queue *Queue) IsEmpty() bool {
 	queue.Lock.RLock()
 	defer queue.Lock.RUnlock()
 	return len(queue.Items) == 0
