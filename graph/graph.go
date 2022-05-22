@@ -50,3 +50,26 @@ func (item *Item) AddEdge(nodeOne, nodeTwo *Node, weight int) {
 
 	item.Lock.Unlock()
 }
+
+func CreateGraph(input InputGraph) *Item {
+	var item Item
+	nodes := make(map[string]*Node)
+
+	for _, value := range input.Graph {
+		if _, found := nodes[value.Source]; !found {
+			node := Node{value.Source}
+			nodes[value.Source] = &node
+			item.AddNode(&node)
+		}
+
+		if _, found := nodes[value.Destination]; !found {
+			node := Node{value.Destination}
+			nodes[value.Destination] = &node
+			item.AddNode(&node)
+		}
+
+		item.AddEdge(nodes[value.Source], nodes[value.Destination], value.Weight)
+	}
+
+	return &item
+}
