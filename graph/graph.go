@@ -22,6 +22,15 @@ type Item struct {
 	Lock  sync.RWMutex
 }
 
+type Vertex struct {
+	Node     *Node
+	Distance int
+}
+
+type Node struct {
+	Value string
+}
+
 func (item *Item) AddNode(node *Node) {
 	item.Lock.Lock()
 	item.Nodes = append(item.Nodes, node)
