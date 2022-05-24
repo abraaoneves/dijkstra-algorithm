@@ -31,6 +31,11 @@ type Node struct {
 	Value string
 }
 
+type Edge struct {
+	Node   *Node
+	Weight int
+}
+
 func (item *Item) AddNode(node *Node) {
 	item.Lock.Lock()
 	item.Nodes = append(item.Nodes, node)
